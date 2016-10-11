@@ -19,10 +19,10 @@ And you will need to call this somewhere, e.g., `init()`:
 icuembed.Load(filename)
 ```
 
-where filename points to where your ICU data file is. You can download from:
+where filename points to where your ICU data file is. It is included in this repo:
 
 ```
-https://github.com/dgraph-io/experiments/raw/master/icu/icudt57l.dat
+https://github.com/dgraph-io/goicu/blob/master/icudt57l.dat
 ```
 
 We will add some tests soon. We do test it indirectly in
