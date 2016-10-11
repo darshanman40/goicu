@@ -19,7 +19,8 @@ And you will need to call this somewhere, e.g., `init()`:
 icuembed.Load(filename)
 ```
 
-where filename points to where your ICU data file is. It is included in this repo:
+where `filename` above points to where your ICU data file is. It is included in
+this repo:
 
 https://github.com/dgraph-io/goicu/blob/master/icudt57l.dat
 
