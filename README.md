@@ -1,4 +1,4 @@
-This work is mainly for embedding ICU into your Go application.
+This work is mainly for embedding ICU57 into your Go application.
 
 To use this lib, include the following in your Go lib which needs to use ICU:
 
