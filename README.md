@@ -2,7 +2,7 @@ This work is mainly for embedding ICU57 into your Go application.
 
 To use this lib, include the following in your Go lib which needs to use ICU:
 
-```
+```go
 // #cgo CPPFLAGS: -I${SRCDIR}/icu/icuembed -DU_DISABLE_RENAMING=1
 // #cgo darwin LDFLAGS: -Wl,-undefined -Wl,dynamic_lookup
 // #cgo !darwin LDFLAGS: -Wl,-unresolved-symbols=ignore-all -lrt
@@ -15,7 +15,7 @@ import (
 
 And you will need to call this somewhere, e.g., `init()`:
 
-```
+```go
 icuembed.Load(filename)
 ```
 
