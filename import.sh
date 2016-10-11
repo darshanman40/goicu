@@ -35,5 +35,6 @@ cp -f $DIR/$DATA $TARGET
 # Add in some Go file(s).
 cd $TARGET
 cp -f icuembed.go.tmpl icuembed/icuembed.go
+cp -f dummy.go.tmpl icuembed/unicode/dummy.go
 
 echo -e "Please run dgraph with the flag:\n-icu $TARGET/$DATA"
