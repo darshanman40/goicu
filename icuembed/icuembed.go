@@ -51,7 +51,7 @@ func Load(filename string) error {
 
 	var icuErr C.UErrorCode
 	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
-	if int(icuErr) < 0 {
+	if !IsOk(icuErr) {
 		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
 	}
 
@@ -66,4 +66,10 @@ func byteToChar(b []byte) *C.char {
 		c = (*C.char)(unsafe.Pointer(&b[0]))
 	}
 	return c
+}
+
+// IsOK returns whether there is any error.
+func IsOK(err C.UErrorCode) bool {
+	// It is ok if the error code is <= 0.
+	return int(err) <= 0
 }

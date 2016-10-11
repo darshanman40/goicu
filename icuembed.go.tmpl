@@ -67,3 +67,9 @@ func byteToChar(b []byte) *C.char {
 	}
 	return c
 }
+
+// IsOK returns whether there is any error.
+func IsOK(err C.UErrorCode) bool {
+	// It is ok if the error code is <= 0.
+	return int(err) <= 0
+}
