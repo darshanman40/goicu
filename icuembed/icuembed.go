@@ -18,7 +18,7 @@
 // so that the user does not have to install ICU.
 package icuembed
 
-// #cgo CPPFLAGS: -O2 -DU_COMMON_IMPLEMENTATION  -DU_DISABLE_RENAMING=1 -Wno-deprecated-declarations
+// #cgo CPPFLAGS: -O2 -DU_COMMON_IMPLEMENTATION -Wno-deprecated-declarations
 // #cgo LDFLAGS: -ldl
 // #cgo darwin LDFLAGS: -Wl,-undefined -Wl,dynamic_lookup
 // #cgo !darwin LDFLAGS: -Wl,-unresolved-symbols=ignore-all -lrt
@@ -51,7 +51,7 @@ func Load(filename string) error {
 
 	var icuErr C.UErrorCode
 	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
-	if !IsOK(icuErr) {
+	if int(icuErr) < 0 {
 		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
 	}
 
