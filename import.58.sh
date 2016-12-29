@@ -13,11 +13,12 @@ cd $DIR
 if [ ! -f $DIR/icu4c-58_2-src.tgz ]; then
   wget http://download.icu-project.org/files/icu4c/58.2/icu4c-58_2-src.tgz
   tar xvzf icu4c-58_2-src.tgz
+  cp `find . -name $DATA` $TARGET
 fi
 
-if [ ! -f $DIR/$DATA ]; then
-  # Get data from somewhere!
-  wget https://github.com/dgraph-io/experiments/raw/master/icu/$DATA
+if [ ! -f $TARGET/$DATA ]; then
+  echo "Data file missing"
+  exit 1
 fi
 
 # Add: Get data from our github page.
