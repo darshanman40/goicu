@@ -2,7 +2,10 @@ set -e
 
 TARGET=`pwd`
 DIR=/tmp/icu
-DATA=icudt57l.dat
+
+# Data file can be obtained from ICU source tgz file.
+# Dgraph will put up one copy of this.
+DATA=icudt58l.dat
 
 mkdir -p $DIR
 cd $DIR
