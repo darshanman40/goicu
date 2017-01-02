@@ -26,50 +26,55 @@ package icuembed
 // #include <unicode/udata.h>
 import "C"
 
-import (
-	"fmt"
-	"io/ioutil"
-	"log"
-	"time"
-	"unsafe"
-)
+// NOTE: Use ICU_DATA to point to data file for embedded mode instead of using
+// Load() below. The reason is that using Load() can lead to RESOURCE_UNAVAILABLE
+// errors when using ICU in the actual dgraph binary, even though unit tests in
+// embedded mode passes.
 
-var icuData []byte // Hold a reference.
+//import (
+//	"fmt"
+//	"io/ioutil"
+//	"log"
+//	"time"
+//	"unsafe"
+//)
 
-// Load loads ICU data from input filename, and call
-// udata_setCommonData to initialize ICU. Without this, ICU will not work.
-func Load(filename string) error {
-	if len(filename) == 0 {
-		return fmt.Errorf("Invalid data file")
-	}
+//var icuData []byte // Hold a reference.
 
-	start := time.Now()
-	icuData, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return err
-	}
+//// Load loads ICU data from input filename, and call
+//// udata_setCommonData to initialize ICU. Without this, ICU will not work.
+//func Load(filename string) error {
+//	if len(filename) == 0 {
+//		return fmt.Errorf("Invalid data file")
+//	}
 
-	var icuErr C.UErrorCode
-	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
-	if int(icuErr) < 0 {
-		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
-	}
+//	start := time.Now()
+//	icuData, err := ioutil.ReadFile(filename)
+//	if err != nil {
+//		return err
+//	}
 
-	log.Printf("Loaded ICU data from [%s] in %s", filename, time.Since(start))
-	return nil
-}
+//	var icuErr C.UErrorCode
+//	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
+//	if int(icuErr) < 0 {
+//		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
+//	}
 
-// byteToChar returns *C.char from byte slice.
-func byteToChar(b []byte) *C.char {
-	var c *C.char
-	if len(b) > 0 {
-		c = (*C.char)(unsafe.Pointer(&b[0]))
-	}
-	return c
-}
+//	log.Printf("Loaded ICU data from [%s] in %s", filename, time.Since(start))
+//	return nil
+//}
 
-// IsOK returns whether there is any error.
-func IsOK(err C.UErrorCode) bool {
-	// It is ok if the error code is <= 0.
-	return int(err) <= 0
-}
+//// byteToChar returns *C.char from byte slice.
+//func byteToChar(b []byte) *C.char {
+//	var c *C.char
+//	if len(b) > 0 {
+//		c = (*C.char)(unsafe.Pointer(&b[0]))
+//	}
+//	return c
+//}
+
+//// IsOK returns whether there is any error.
+//func IsOK(err C.UErrorCode) bool {
+//	// It is ok if the error code is <= 0.
+//	return int(err) <= 0
+//}
