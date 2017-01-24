@@ -31,50 +31,50 @@ import "C"
 // errors when using ICU in the actual dgraph binary, even though unit tests in
 // embedded mode passes.
 
-//import (
-//	"fmt"
-//	"io/ioutil"
-//	"log"
-//	"time"
-//	"unsafe"
-//)
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"time"
+	"unsafe"
+)
 
-//var icuData []byte // Hold a reference.
+var icuData []byte // Hold a reference.
 
-//// Load loads ICU data from input filename, and call
-//// udata_setCommonData to initialize ICU. Without this, ICU will not work.
-//func Load(filename string) error {
-//	if len(filename) == 0 {
-//		return fmt.Errorf("Invalid data file")
-//	}
+// Load loads ICU data from input filename, and call
+// udata_setCommonData to initialize ICU. Without this, ICU will not work.
+func Load(filename string) error {
+	if len(filename) == 0 {
+		return fmt.Errorf("Invalid data file")
+	}
 
-//	start := time.Now()
-//	icuData, err := ioutil.ReadFile(filename)
-//	if err != nil {
-//		return err
-//	}
+	start := time.Now()
+	icuData, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return err
+	}
 
-//	var icuErr C.UErrorCode
-//	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
-//	if int(icuErr) < 0 {
-//		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
-//	}
+	var icuErr C.UErrorCode
+	C.udata_setCommonData(unsafe.Pointer(byteToChar(icuData)), &icuErr)
+	if int(icuErr) < 0 {
+		return fmt.Errorf("udata_setCommonData failed: %d", int(icuErr))
+	}
 
-//	log.Printf("Loaded ICU data from [%s] in %s", filename, time.Since(start))
-//	return nil
-//}
+	log.Printf("Loaded ICU data from [%s] in %s", filename, time.Since(start))
+	return nil
+}
 
-//// byteToChar returns *C.char from byte slice.
-//func byteToChar(b []byte) *C.char {
-//	var c *C.char
-//	if len(b) > 0 {
-//		c = (*C.char)(unsafe.Pointer(&b[0]))
-//	}
-//	return c
-//}
+// byteToChar returns *C.char from byte slice.
+func byteToChar(b []byte) *C.char {
+	var c *C.char
+	if len(b) > 0 {
+		c = (*C.char)(unsafe.Pointer(&b[0]))
+	}
+	return c
+}
 
-//// IsOK returns whether there is any error.
-//func IsOK(err C.UErrorCode) bool {
-//	// It is ok if the error code is <= 0.
-//	return int(err) <= 0
-//}
+// IsOK returns whether there is any error.
+func IsOK(err C.UErrorCode) bool {
+	// It is ok if the error code is <= 0.
+	return int(err) <= 0
+}
