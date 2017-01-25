@@ -49,7 +49,8 @@ func Load(filename string) error {
 	}
 
 	start := time.Now()
-	icuData, err := ioutil.ReadFile(filename)
+	var err error
+	icuData, err = ioutil.ReadFile(filename)
 	if err != nil {
 		return err
 	}
